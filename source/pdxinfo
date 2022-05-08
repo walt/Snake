@@ -1,0 +1,7 @@
+name=Snake
+author=Grayson Consulting LLC
+description=One of those snake games.
+bundleID=com.grysn.snake
+version=1.0
+buildNumber=1
+imagePath=launch/
