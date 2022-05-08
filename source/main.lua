@@ -74,21 +74,25 @@ function myTimerClosure()
         nextXPosition = nextXPosition + 1
         if nextXPosition > gridXCount then
             beepAndRestart()
+            do return end
         end
     elseif directionQueue[1] == 'left' then
         nextXPosition = nextXPosition - 1
         if nextXPosition < 1 then
             beepAndRestart()
+            do return end
         end
     elseif directionQueue[1] == 'down' then
         nextYPosition = nextYPosition + 1
         if nextYPosition > gridYCount then
             beepAndRestart()
+            do return end
         end
     elseif directionQueue[1] == 'up' then
         nextYPosition = nextYPosition - 1
         if nextYPosition < 1 then
             beepAndRestart()
+            do return end
         end
     end
 
@@ -122,6 +126,7 @@ function myTimerClosure()
         end
     else
         beepAndRestart()
+        do return end
     end
 
 
