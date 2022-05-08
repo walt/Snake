@@ -9,7 +9,7 @@ local cellSize = nil
 local gridXCount = nil
 local gridYCount = nil
 local foodPosition = nil
-local direction = nil
+local directionQueue = nil
 
 function myGameSetUp()
     cellSize = 20
@@ -37,23 +37,23 @@ end
 
 function moveFood()
     local possibleFoodPositions = {}
-    
+
     for foodX = 1, gridXCount do
         for foodY = 1, gridYCount do
             local possible = true
-            
+
             for segmentIndex, segment in ipairs(snakeSegments) do
                 if foodX == segment.x and foodY == segment.y then
                     possible = false
                 end
             end
-            
+
             if possible then
                 table.insert(possibleFoodPositions, {x = foodX, y = foodY})
             end
         end
     end
-    
+
     foodPosition = possibleFoodPositions[
         math.random(#possibleFoodPositions)
     ]
@@ -96,7 +96,7 @@ function myTimerClosure()
     -- update the snake data
 
     local canMove = true
-    
+
     for segmentIndex, segment in ipairs(snakeSegments) do
         if segmentIndex ~= #snakeSegments
         and nextXPosition == segment.x
@@ -109,8 +109,9 @@ function myTimerClosure()
         table.insert(snakeSegments, 1, {
             x = nextXPosition, y = nextYPosition
         })
-        
-        if snakeSegments[1].x == foodPosition.x and snakeSegments[1].y == foodPosition.y then
+
+        if snakeSegments[1].x == foodPosition.x
+        and snakeSegments[1].y == foodPosition.y then
             local s = playdate.sound.synth.new(playdate.sound.kWaveSine)
             s:playMIDINote('A4', 0.5, 0.5)
             -- s:playMIDINote('A5', 0.5, 0.5, 0.5)
