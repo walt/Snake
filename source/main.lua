@@ -8,6 +8,7 @@ local snakeSegments = nil
 local cellSize = nil
 local gridXCount = nil
 local gridYCount = nil
+local speed = nil
 local foodPosition = nil
 local directionQueue = nil
 
@@ -15,12 +16,13 @@ function myGameSetUp()
     cellSize = 20
     gridXCount = playdate.display.getWidth() / cellSize
     gridYCount = playdate.display.getHeight() / cellSize
+    speed = 500
 
     restart()
 
     playdate.timer.keyRepeatTimerWithDelay(
-        500,
-        500,
+        speed,
+        speed,
         myTimerClosure
     )
 end
