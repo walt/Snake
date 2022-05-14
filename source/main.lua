@@ -18,7 +18,7 @@ function myGameSetUp()
     gridYCount = playdate.display.getHeight() / cellSize
     speed = 500
 
-    restart()
+    reset()
 
     playdate.timer.keyRepeatTimerWithDelay(
         speed,
@@ -27,7 +27,7 @@ function myGameSetUp()
     )
 end
 
-function restart()
+function reset()
     snakeSegments = {
         {x = 3, y = 1},
         {x = 2, y = 1},
@@ -75,25 +75,25 @@ function myTimerClosure()
     if directionQueue[1] == 'right' then
         nextXPosition = nextXPosition + 1
         if nextXPosition > gridXCount then
-            beepAndRestart()
+            beepAndReset()
             do return end
         end
     elseif directionQueue[1] == 'left' then
         nextXPosition = nextXPosition - 1
         if nextXPosition < 1 then
-            beepAndRestart()
+            beepAndReset()
             do return end
         end
     elseif directionQueue[1] == 'down' then
         nextYPosition = nextYPosition + 1
         if nextYPosition > gridYCount then
-            beepAndRestart()
+            beepAndReset()
             do return end
         end
     elseif directionQueue[1] == 'up' then
         nextYPosition = nextYPosition - 1
         if nextYPosition < 1 then
-            beepAndRestart()
+            beepAndReset()
             do return end
         end
     end
@@ -127,7 +127,7 @@ function myTimerClosure()
             table.remove(snakeSegments)
         end
     else
-        beepAndRestart()
+        beepAndReset()
         do return end
     end
 
@@ -159,11 +159,11 @@ function myTimerClosure()
     end
 end
 
-function beepAndRestart()
+function beepAndReset()
     local s = playdate.sound.synth.new(playdate.sound.kWaveSine)
     s:playMIDINote('C5', 0.5, 0.5)
     -- s:playMIDINote('C4', 0.5, 0.5, 0.5)
-    restart()
+    reset()
 end
 
 myGameSetUp()
