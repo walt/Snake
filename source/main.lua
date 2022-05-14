@@ -64,23 +64,64 @@ function redraw()
 
     -- redraw the food
 
-    gfx.drawRect(
-        ((foodPosition.x - 1) * cellSize) + 2,
-        ((foodPosition.y - 1) * cellSize) + 2,
-        cellSize - 4,
-        cellSize - 4
+    gfx.fillCircleInRect(
+        ((foodPosition.x - 1) * cellSize) + 5,
+        ((foodPosition.y - 1) * cellSize) + 5,
+        cellSize - 10,
+        cellSize - 10
     )
 
 
     -- redraw the snake
 
     for segmentIndex, segment in ipairs(snakeSegments) do
+        -- draw the snake segments
+
         gfx.fillRect(
-            (segment.x - 1) * cellSize,
-            (segment.y - 1) * cellSize,
-            cellSize,
-            cellSize
+            ((segment.x - 1) * cellSize) + 4,
+            ((segment.y - 1) * cellSize) + 4,
+            cellSize - 8,
+            cellSize - 8
         )
+
+
+        -- draw the snake segment connectors
+
+        local prevSegIndex = segmentIndex - 1
+        if prevSegIndex > 0 then
+            if snakeSegments[prevSegIndex].x < segment.x then
+                gfx.fillRect(
+                    (((segment.x - 1) * cellSize) + 4) - 8,
+                    ((segment.y - 1) * cellSize) + 4,
+                    8,
+                    cellSize - 8
+                )
+            end
+            if snakeSegments[prevSegIndex].x > segment.x then
+                gfx.fillRect(
+                    (((segment.x - 1) * cellSize) + cellSize) - 4,
+                    ((segment.y - 1) * cellSize) + 4,
+                    8,
+                    cellSize - 8
+                )
+            end
+            if snakeSegments[prevSegIndex].y < segment.y then
+                gfx.fillRect(
+                    ((segment.x - 1) * cellSize) + 4,
+                    (((segment.y - 1) * cellSize) + 4) - 8,
+                    cellSize - 8,
+                    8
+                )
+            end
+            if snakeSegments[prevSegIndex].y > segment.y then
+                gfx.fillRect(
+                    ((segment.x - 1) * cellSize) + 4,
+                    (((segment.y - 1) * cellSize) + cellSize) - 4,
+                    cellSize - 8,
+                    8
+                )
+            end
+        end
     end
 
     playdate.timer.performAfterDelay(speed, myTimerClosure)
