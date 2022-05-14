@@ -4,13 +4,13 @@ import "CoreLibs/sprites"
 import "CoreLibs/timer"
 
 local gfx <const> = playdate.graphics
-local snakeSegments = nil
 local cellSize = nil
 local gridXCount = nil
 local gridYCount = nil
 local speed = nil
-local foodPosition = nil
+local snakeSegments = nil
 local directionQueue = nil
+local foodPosition = nil
 
 function myGameSetUp()
     cellSize = 20
