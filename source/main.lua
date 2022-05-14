@@ -184,9 +184,15 @@ function myTimerClosure()
 
         if snakeSegments[1].x == foodPosition.x
         and snakeSegments[1].y == foodPosition.y then
-            local s = playdate.sound.synth.new(playdate.sound.kWaveSine)
-            s:playMIDINote('A4', 0.5, 0.5)
-            -- s:playMIDINote('A5', 0.5, 0.5, 0.5)
+            local synth = playdate.sound.synth.new(playdate.sound.kWaveSine)
+            local track = playdate.sound.track.new()
+            track:setInstrument(synth)
+            track:addNote(1, 'C5', 2)
+            track:addNote(3, 'C6', 2)
+            track:addNote(5, 'C7', 2)
+            local sequence = playdate.sound.sequence.new()
+            sequence:addTrack(track)
+            sequence:play()
 
             moveFood()
         else
@@ -201,9 +207,16 @@ function myTimerClosure()
 end
 
 function beepAndReset()
-    local s = playdate.sound.synth.new(playdate.sound.kWaveSine)
-    s:playMIDINote('C5', 0.5, 0.5)
-    -- s:playMIDINote('C4', 0.5, 0.5, 0.5)
+    local synth = playdate.sound.synth.new(playdate.sound.kWaveSine)
+    local track = playdate.sound.track.new()
+    track:setInstrument(synth)
+    track:addNote(1, 'C7', 2)
+    track:addNote(3, 'C6', 2)
+    track:addNote(5, 'C5', 2)
+    local sequence = playdate.sound.sequence.new()
+    sequence:addTrack(track)
+    sequence:play()
+
     reset()
 end
 
