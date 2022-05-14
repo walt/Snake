@@ -19,12 +19,6 @@ function myGameSetUp()
     speed = 500
 
     reset()
-
-    playdate.timer.keyRepeatTimerWithDelay(
-        speed,
-        speed,
-        myTimerClosure
-    )
 end
 
 function reset()
@@ -35,6 +29,7 @@ function reset()
     }
     directionQueue = {'right'}
     moveFood()
+    redraw()
 end
 
 function moveFood()
@@ -59,6 +54,36 @@ function moveFood()
     foodPosition = possibleFoodPositions[
         math.random(#possibleFoodPositions)
     ]
+end
+
+function redraw()
+    -- clear the screen
+
+    gfx.clear()
+
+
+    -- redraw the food
+
+    gfx.drawRect(
+        ((foodPosition.x - 1) * cellSize) + 2,
+        ((foodPosition.y - 1) * cellSize) + 2,
+        cellSize - 4,
+        cellSize - 4
+    )
+
+
+    -- redraw the snake
+
+    for segmentIndex, segment in ipairs(snakeSegments) do
+        gfx.fillRect(
+            (segment.x - 1) * cellSize,
+            (segment.y - 1) * cellSize,
+            cellSize,
+            cellSize
+        )
+    end
+
+    playdate.timer.performAfterDelay(speed, myTimerClosure)
 end
 
 function myTimerClosure()
@@ -131,32 +156,7 @@ function myTimerClosure()
         do return end
     end
 
-
-    -- clear the screen
-
-    gfx.clear()
-
-
-    -- redraw the food
-
-    gfx.drawRect(
-        ((foodPosition.x - 1) * cellSize) + 2,
-        ((foodPosition.y - 1) * cellSize) + 2,
-        cellSize - 4,
-        cellSize - 4
-    )
-
-
-    -- redraw the snake
-
-    for segmentIndex, segment in ipairs(snakeSegments) do
-        gfx.fillRect(
-            (segment.x - 1) * cellSize,
-            (segment.y - 1) * cellSize,
-            cellSize,
-            cellSize
-        )
-    end
+    redraw()
 end
 
 function beepAndReset()
